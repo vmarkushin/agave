@@ -14,6 +14,10 @@ use {
         mem,
         path::{Path, PathBuf},
     },
+<<<<<<< HEAD
+=======
+    std::{borrow::Borrow, io::Read, mem, path::PathBuf},
+>>>>>>> 4247a8a546 (Archives storages directly (#503))
     thiserror::Error,
 };
 
@@ -171,6 +175,17 @@ impl AccountsFile {
     ) -> Option<Vec<StoredAccountInfo>> {
         match self {
             Self::AppendVec(av) => av.append_accounts(accounts, skip),
+        }
+    }
+
+    /// Returns a Read implementation suitable for use when archiving accounts files
+    pub fn data_for_archive(&self) -> impl Read + '_ {
+        match self {
+            Self::AppendVec(av) => av.data_for_archive(),
+            Self::TieredStorage(ts) => ts
+                .reader()
+                .expect("must be a reader when archiving")
+                .data_for_archive(),
         }
     }
 }

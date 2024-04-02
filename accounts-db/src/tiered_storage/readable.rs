@@ -114,4 +114,59 @@ impl TieredStorageReader {
             Self::Hot(hot) => hot.num_accounts(),
         }
     }
+<<<<<<< HEAD
+=======
+
+    /// Returns the account located at the specified index offset.
+    pub fn get_account(
+        &self,
+        index_offset: IndexOffset,
+    ) -> TieredStorageResult<Option<(StoredAccountMeta<'_>, IndexOffset)>> {
+        match self {
+            Self::Hot(hot) => hot.get_account(index_offset),
+        }
+    }
+
+    /// Returns Ok(index_of_matching_owner) if the account owner at
+    /// `account_offset` is one of the pubkeys in `owners`.
+    ///
+    /// Returns Err(MatchAccountOwnerError::NoMatch) if the account has 0
+    /// lamports or the owner is not one of the pubkeys in `owners`.
+    ///
+    /// Returns Err(MatchAccountOwnerError::UnableToLoad) if there is any internal
+    /// error that causes the data unable to load, including `account_offset`
+    /// causes a data overrun.
+    pub fn account_matches_owners(
+        &self,
+        index_offset: IndexOffset,
+        owners: &[Pubkey],
+    ) -> Result<usize, MatchAccountOwnerError> {
+        match self {
+            Self::Hot(hot) => {
+                let account_offset = hot
+                    .get_account_offset(index_offset)
+                    .map_err(|_| MatchAccountOwnerError::UnableToLoad)?;
+                hot.account_matches_owners(account_offset, owners)
+            }
+        }
+    }
+
+    /// Return a vector of account metadata for each account, starting from
+    /// `index_offset`
+    pub fn accounts(
+        &self,
+        index_offset: IndexOffset,
+    ) -> TieredStorageResult<Vec<StoredAccountMeta>> {
+        match self {
+            Self::Hot(hot) => hot.accounts(index_offset),
+        }
+    }
+
+    /// Returns a slice suitable for use when archiving tiered storages
+    pub fn data_for_archive(&self) -> &[u8] {
+        match self {
+            Self::Hot(hot) => hot.data_for_archive(),
+        }
+    }
+>>>>>>> 4247a8a546 (Archives storages directly (#503))
 }
