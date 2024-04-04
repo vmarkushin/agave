@@ -16,8 +16,8 @@ use {
     std::{
         net::{IpAddr, UdpSocket},
         sync::{
-            atomic::{AtomicBool, AtomicUsize, Ordering},
-            Arc, RwLock,
+            atomic::{AtomicBool, AtomicU64, AtomicUsize, Ordering},
+            Arc, Mutex, RwLock,
         },
         thread,
         time::{Duration, SystemTime},
@@ -157,10 +157,25 @@ pub struct StreamStats {
     pub(crate) connection_removed: AtomicUsize,
     pub(crate) connection_remove_failed: AtomicUsize,
     pub(crate) throttled_streams: AtomicUsize,
+<<<<<<< HEAD
+=======
+    pub(crate) stream_load_ema: AtomicUsize,
+    pub(crate) stream_load_ema_overflow: AtomicUsize,
+    pub(crate) stream_load_capacity_overflow: AtomicUsize,
+    pub(crate) process_sampled_packets_us_hist: Mutex<histogram::Histogram>,
+    pub(crate) perf_track_overhead_us: AtomicU64,
+>>>>>>> 2b0391049d (transaction performance tracking -- streamer stage (#257))
 }
 
 impl StreamStats {
     pub fn report(&self, name: &'static str) {
+        let process_sampled_packets_us_hist = {
+            let mut metrics = self.process_sampled_packets_us_hist.lock().unwrap();
+            let process_sampled_packets_us_hist = metrics.clone();
+            metrics.clear();
+            process_sampled_packets_us_hist
+        };
+
         datapoint_info!(
             name,
             (
@@ -392,6 +407,56 @@ impl StreamStats {
                 self.throttled_streams.swap(0, Ordering::Relaxed),
                 i64
             ),
+<<<<<<< HEAD
+=======
+            (
+                "stream_load_ema",
+                self.stream_load_ema.load(Ordering::Relaxed),
+                i64
+            ),
+            (
+                "stream_load_ema_overflow",
+                self.stream_load_ema_overflow.load(Ordering::Relaxed),
+                i64
+            ),
+            (
+                "stream_load_capacity_overflow",
+                self.stream_load_capacity_overflow.load(Ordering::Relaxed),
+                i64
+            ),
+            (
+                "process_sampled_packets_us_90pct",
+                process_sampled_packets_us_hist
+                    .percentile(90.0)
+                    .unwrap_or(0),
+                i64
+            ),
+            (
+                "process_sampled_packets_us_min",
+                process_sampled_packets_us_hist.minimum().unwrap_or(0),
+                i64
+            ),
+            (
+                "process_sampled_packets_us_max",
+                process_sampled_packets_us_hist.maximum().unwrap_or(0),
+                i64
+            ),
+            (
+                "process_sampled_packets_us_mean",
+                process_sampled_packets_us_hist.mean().unwrap_or(0),
+                i64
+            ),
+            (
+                "process_sampled_packets_count",
+                process_sampled_packets_us_hist.entries(),
+                i64
+            ),
+            (
+                "perf_track_overhead_us",
+                self.perf_track_overhead_us.swap(0, Ordering::Relaxed),
+                i64
+            ),
+>>>>>>> 2b0391049d (transaction performance tracking -- streamer stage (#257))
         );
     }
 }
