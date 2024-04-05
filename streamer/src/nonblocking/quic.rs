@@ -717,7 +717,6 @@ async fn packet_batch_sender(
     }
 }
 
-<<<<<<< HEAD
 fn max_streams_for_connection_in_100ms(
     connection_type: ConnectionPeerType,
     stake: u64,
@@ -745,7 +744,8 @@ fn reset_throttling_params_if_needed(last_instant: &mut tokio::time::Instant) ->
     } else {
         false
     }
-=======
+}
+
 fn track_streamer_fetch_packet_performance(
     packet_perf_measure: &mut [([u8; 64], Instant)],
     stats: &Arc<StreamStats>,
@@ -770,7 +770,6 @@ fn track_streamer_fetch_packet_performance(
     stats
         .perf_track_overhead_us
         .fetch_add(measure.as_us(), Ordering::Relaxed);
->>>>>>> 2b0391049d (transaction performance tracking -- streamer stage (#257))
 }
 
 async fn handle_connection(

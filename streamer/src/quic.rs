@@ -157,14 +157,8 @@ pub struct StreamStats {
     pub(crate) connection_removed: AtomicUsize,
     pub(crate) connection_remove_failed: AtomicUsize,
     pub(crate) throttled_streams: AtomicUsize,
-<<<<<<< HEAD
-=======
-    pub(crate) stream_load_ema: AtomicUsize,
-    pub(crate) stream_load_ema_overflow: AtomicUsize,
-    pub(crate) stream_load_capacity_overflow: AtomicUsize,
     pub(crate) process_sampled_packets_us_hist: Mutex<histogram::Histogram>,
     pub(crate) perf_track_overhead_us: AtomicU64,
->>>>>>> 2b0391049d (transaction performance tracking -- streamer stage (#257))
 }
 
 impl StreamStats {
@@ -407,23 +401,6 @@ impl StreamStats {
                 self.throttled_streams.swap(0, Ordering::Relaxed),
                 i64
             ),
-<<<<<<< HEAD
-=======
-            (
-                "stream_load_ema",
-                self.stream_load_ema.load(Ordering::Relaxed),
-                i64
-            ),
-            (
-                "stream_load_ema_overflow",
-                self.stream_load_ema_overflow.load(Ordering::Relaxed),
-                i64
-            ),
-            (
-                "stream_load_capacity_overflow",
-                self.stream_load_capacity_overflow.load(Ordering::Relaxed),
-                i64
-            ),
             (
                 "process_sampled_packets_us_90pct",
                 process_sampled_packets_us_hist
@@ -456,7 +433,6 @@ impl StreamStats {
                 self.perf_track_overhead_us.swap(0, Ordering::Relaxed),
                 i64
             ),
->>>>>>> 2b0391049d (transaction performance tracking -- streamer stage (#257))
         );
     }
 }
