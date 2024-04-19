@@ -1440,14 +1440,8 @@ pub fn main() {
             use_snapshot_archives_at_startup::cli::NAME,
             UseSnapshotArchivesAtStartup
         ),
-<<<<<<< HEAD
-=======
-        ip_echo_server_threads,
-        replay_forks_threads,
-        replay_transactions_threads,
         delay_leader_block_for_pending_fork: matches
             .is_present("delay_leader_block_for_pending_fork"),
->>>>>>> 1c1b4c3e28 (Use poh grace ticks when new reset bank is pending (#794))
         ..ValidatorConfig::default()
     };
 
