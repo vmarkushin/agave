@@ -7197,7 +7197,7 @@ dependencies = [
  "async-channel",
  "bytes",
  "crossbeam-channel",
- "dashmap",
+ "dashmap 4.0.2",
  "futures-util",
  "histogram",
  "indexmap 2.0.2",

@@ -1,16 +1,7 @@
 use {
     super::stream_throttle::ConnectionStreamCounter,
     crate::{
-<<<<<<< HEAD
-=======
-        nonblocking::{
-            connection_rate_limiter::{ConnectionRateLimiter, TotalConnectionRateLimiter},
-            stream_throttle::{
-                ConnectionStreamCounter, StakedStreamLoadEMA, STREAM_THROTTLING_INTERVAL,
-                STREAM_THROTTLING_INTERVAL_MS,
-            },
-        },
->>>>>>> f54c120450 (Connection rate limiting (#948))
+        nonblocking::connection_rate_limiter::{ConnectionRateLimiter, TotalConnectionRateLimiter},
         quic::{configure_server, QuicServerError, StreamStats},
         streamer::StakedNodes,
         tls_certificates::get_pubkey_from_tls_certificate,

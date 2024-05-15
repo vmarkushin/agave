@@ -10,15 +10,10 @@ mod tests {
         },
         solana_sdk::{net::DEFAULT_TPU_COALESCE, packet::PACKET_DATA_SIZE, signature::Keypair},
         solana_streamer::{
-<<<<<<< HEAD
-            nonblocking::quic::{DEFAULT_MAX_STREAMS_PER_MS, DEFAULT_WAIT_FOR_CHUNK_TIMEOUT},
-=======
             nonblocking::quic::{
                 DEFAULT_MAX_CONNECTIONS_PER_IPADDR_PER_MINUTE, DEFAULT_MAX_STREAMS_PER_MS,
                 DEFAULT_WAIT_FOR_CHUNK_TIMEOUT,
             },
-            quic::SpawnServerResult,
->>>>>>> f54c120450 (Connection rate limiting (#948))
             streamer::StakedNodes,
             tls_certificates::new_self_signed_tls_certificate,
         },

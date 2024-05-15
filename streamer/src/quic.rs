@@ -431,46 +431,11 @@ impl StreamStats {
                 self.throttled_staked_streams.swap(0, Ordering::Relaxed),
                 i64
             ),
-<<<<<<< HEAD
-=======
-            (
-                "process_sampled_packets_us_90pct",
-                process_sampled_packets_us_hist
-                    .percentile(90.0)
-                    .unwrap_or(0),
-                i64
-            ),
-            (
-                "process_sampled_packets_us_min",
-                process_sampled_packets_us_hist.minimum().unwrap_or(0),
-                i64
-            ),
-            (
-                "process_sampled_packets_us_max",
-                process_sampled_packets_us_hist.maximum().unwrap_or(0),
-                i64
-            ),
-            (
-                "process_sampled_packets_us_mean",
-                process_sampled_packets_us_hist.mean().unwrap_or(0),
-                i64
-            ),
-            (
-                "process_sampled_packets_count",
-                process_sampled_packets_us_hist.entries(),
-                i64
-            ),
-            (
-                "perf_track_overhead_us",
-                self.perf_track_overhead_us.swap(0, Ordering::Relaxed),
-                i64
-            ),
             (
                 "connection_rate_limiter_length",
                 self.connection_rate_limiter_length.load(Ordering::Relaxed),
                 i64
             ),
->>>>>>> f54c120450 (Connection rate limiting (#948))
         );
     }
 }
