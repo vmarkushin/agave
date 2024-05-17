@@ -672,6 +672,15 @@ pub enum BlockstoreProcessorError {
 
     #[error("root bank with mismatched capitalization at {0}")]
     RootBankWithMismatchedCapitalization(Slot),
+<<<<<<< HEAD
+=======
+
+    #[error("set root error {0}")]
+    SetRootError(#[from] SetRootError),
+
+    #[error("incomplete final fec set")]
+    IncompleteFinalFecSet,
+>>>>>>> 8c67696346 (replay: only vote on blocks with >= 32 data shreds in last fec set (#1002))
 }
 
 /// Callback for accessing bank state while processing the blockstore
