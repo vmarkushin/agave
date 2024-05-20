@@ -18,13 +18,8 @@ use {
     regex::Regex,
     solana_accounts_db::{
         account_storage::AccountStorageMap,
-<<<<<<< HEAD
         accounts_db::{AccountStorageEntry, AtomicAppendVecId},
-        accounts_file::AccountsFileError,
-=======
-        accounts_db::{AccountStorageEntry, AtomicAccountsFileId},
         accounts_file::{AccountsFile, AccountsFileError},
->>>>>>> 4247a8a546 (Archives storages directly (#503))
         append_vec::AppendVec,
         hardened_unpack::{self, ParallelSelector, UnpackError},
         shared_buffer_reader::{SharedBuffer, SharedBufferReader},

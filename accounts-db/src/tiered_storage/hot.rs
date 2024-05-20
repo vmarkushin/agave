@@ -442,46 +442,11 @@ impl HotStorageReader {
             index_offset.0.saturating_add(1) as usize,
         )))
     }
-<<<<<<< HEAD
-=======
-
-    /// Return a vector of account metadata for each account, starting from
-    /// `index_offset`
-    pub fn accounts(
-        &self,
-        mut index_offset: IndexOffset,
-    ) -> TieredStorageResult<Vec<StoredAccountMeta>> {
-        let mut accounts = Vec::with_capacity(
-            self.footer
-                .account_entry_count
-                .saturating_sub(index_offset.0) as usize,
-        );
-        while let Some((account, next)) = self.get_account(index_offset)? {
-            accounts.push(account);
-            index_offset = next;
-        }
-        Ok(accounts)
-    }
 
     /// Returns a slice suitable for use when archiving hot storages
     pub fn data_for_archive(&self) -> &[u8] {
         self.mmap.as_ref()
     }
-}
-
-fn write_optional_fields(
-    file: &mut TieredWritableFile,
-    opt_fields: &AccountMetaOptionalFields,
-) -> TieredStorageResult<usize> {
-    let mut size = 0;
-    if let Some(rent_epoch) = opt_fields.rent_epoch {
-        size += file.write_pod(&rent_epoch)?;
-    }
-
-    debug_assert_eq!(size, opt_fields.size());
-
-    Ok(size)
->>>>>>> 4247a8a546 (Archives storages directly (#503))
 }
 
 /// The writer that creates a hot accounts file.

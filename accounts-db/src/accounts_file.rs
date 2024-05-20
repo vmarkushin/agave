@@ -11,13 +11,10 @@ use {
     solana_sdk::{account::ReadableAccount, clock::Slot, pubkey::Pubkey},
     std::{
         borrow::Borrow,
+        io::Read,
         mem,
         path::{Path, PathBuf},
     },
-<<<<<<< HEAD
-=======
-    std::{borrow::Borrow, io::Read, mem, path::PathBuf},
->>>>>>> 4247a8a546 (Archives storages directly (#503))
     thiserror::Error,
 };
 
@@ -182,10 +179,6 @@ impl AccountsFile {
     pub fn data_for_archive(&self) -> impl Read + '_ {
         match self {
             Self::AppendVec(av) => av.data_for_archive(),
-            Self::TieredStorage(ts) => ts
-                .reader()
-                .expect("must be a reader when archiving")
-                .data_for_archive(),
         }
     }
 }
