@@ -4,6 +4,7 @@ use solana_sdk::{
     pubkey::Pubkey,
     rent_debits::RentDebits,
 };
+use crate::impl_borsh_serialize_deserialize;
 
 pub trait NonceInfo {
     fn address(&self) -> &Pubkey;
@@ -13,11 +14,15 @@ pub trait NonceInfo {
 }
 
 /// Holds limited nonce info available during transaction checks
-#[derive(Clone, Debug, Default, PartialEq, Eq)]
+#[derive(Clone, Debug, Default, PartialEq, Eq, borsh::BorshDeserialize, borsh::BorshSerialize, serde::Serialize, serde::Deserialize)]
+#[borsh(crate = "borsh")]
 pub struct NoncePartial {
     address: Pubkey,
     account: AccountSharedData,
 }
+
+impl_borsh_serialize_deserialize!(borsh0_9, NoncePartial);
+impl_borsh_serialize_deserialize!(borsh0_10, NoncePartial);
 
 impl NoncePartial {
     pub fn new(address: Pubkey, account: AccountSharedData) -> Self {

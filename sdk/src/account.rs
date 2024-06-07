@@ -1,5 +1,6 @@
 //! The Solana [`Account`] type.
 
+use std::io::{Read, Write};
 #[cfg(feature = "dev-context-only-utils")]
 use qualifier_attr::qualifiers;
 use {
@@ -117,6 +118,32 @@ pub struct AccountSharedData {
     executable: bool,
     /// the epoch at which this account will next owe rent
     rent_epoch: Epoch,
+}
+
+impl borsh::BorshSerialize for AccountSharedData {
+    fn serialize<W: Write>(&self, writer: &mut W) -> std::io::Result<()> {
+        let AccountSharedData {
+            lamports, data, owner, executable, rent_epoch
+        } = self;
+        borsh::BorshSerialize::serialize(&lamports, writer)?;
+        borsh::BorshSerialize::serialize(&data[..], writer)?;
+        borsh::BorshSerialize::serialize(owner, writer)?;
+        borsh::BorshSerialize::serialize(&executable, writer)?;
+        borsh::BorshSerialize::serialize(rent_epoch, writer)
+    }
+}
+
+impl borsh::BorshDeserialize for AccountSharedData {
+    fn deserialize_reader<R: Read>(reader: &mut R) -> std::io::Result<Self> {
+        let lamports = u64::deserialize_reader(reader)?;
+        let data = Vec::<u8>::deserialize_reader(reader)?;
+        let owner = Pubkey::deserialize_reader(reader)?;
+        let executable = bool::deserialize_reader(reader)?;
+        let rent_epoch = Epoch::deserialize_reader(reader)?;
+        Ok(AccountSharedData {
+            lamports, data: Arc::new(data), owner, executable, rent_epoch
+        })
+    }
 }
 
 /// Compares two ReadableAccounts

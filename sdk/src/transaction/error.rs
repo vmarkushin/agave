@@ -7,11 +7,13 @@ use {
     serde::Serialize,
     thiserror::Error,
 };
+use solana_program::impl_borsh_serialize_deserialize;
 
 /// Reasons a transaction might be rejected.
 #[derive(
-    Error, Serialize, Deserialize, Debug, PartialEq, Eq, Clone, AbiExample, AbiEnumVisitor,
+    Error, Serialize, Deserialize, Debug, PartialEq, Eq, Clone, AbiExample, AbiEnumVisitor, borsh::BorshDeserialize, borsh::BorshSerialize
 )]
+#[borsh(crate = "borsh")]
 pub enum TransactionError {
     /// An account is already being processed in another transaction in a way
     /// that does not support parallelism
@@ -174,6 +176,10 @@ pub enum TransactionError {
     #[error("Program cache hit max limit")]
     ProgramCacheHitMaxLimit,
 }
+
+impl_borsh_serialize_deserialize!(borsh0_10, TransactionError);
+impl_borsh_serialize_deserialize!(borsh0_9, TransactionError);
+
 
 impl From<SanitizeError> for TransactionError {
     fn from(_: SanitizeError) -> Self {

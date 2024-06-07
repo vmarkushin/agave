@@ -1,6 +1,7 @@
 //! Functionality for public and private keys.
 #![cfg(feature = "full")]
 
+use std::io::Read;
 // legacy module paths
 pub use crate::signer::{keypair::*, null_signer::*, presigner::*, *};
 use {
@@ -25,6 +26,19 @@ const MAX_BASE58_SIGNATURE_LEN: usize = 88;
     Serialize, Deserialize, Clone, Copy, Default, Eq, PartialEq, Ord, PartialOrd, Hash, AbiExample,
 )]
 pub struct Signature(GenericArray<u8, U64>);
+
+impl borsh::BorshSerialize for Signature {
+    fn serialize<W: std::io::Write>(&self, writer: &mut W) -> std::io::Result<()> {
+        self.0.to_vec().serialize(writer)
+    }
+}
+
+impl borsh::BorshDeserialize for Signature {
+    fn deserialize_reader<R: Read>(reader: &mut R) -> std::io::Result<Self> {
+        let bytes = Vec::<u8>::deserialize_reader(reader)?;
+        Ok(Signature::try_from(bytes).map_err(|_| std::io::ErrorKind::InvalidData)?)
+    }
+}
 
 impl crate::sanitize::Sanitize for Signature {}
 

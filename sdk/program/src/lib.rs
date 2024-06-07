@@ -504,6 +504,7 @@ pub mod loader_upgradeable_instruction;
 pub mod loader_v4;
 pub mod loader_v4_instruction;
 pub mod log;
+pub mod macros;
 pub mod message;
 pub mod native_token;
 pub mod nonce;

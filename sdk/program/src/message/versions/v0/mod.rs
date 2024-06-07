@@ -32,8 +32,9 @@ mod loaded;
 /// Address table lookups describe an on-chain address lookup table to use
 /// for loading more readonly and writable accounts in a single tx.
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
-#[derive(Serialize, Deserialize, Default, Debug, PartialEq, Eq, Clone)]
+#[derive(Serialize, Deserialize, Default, Debug, PartialEq, Eq, Clone, borsh::BorshDeserialize, borsh::BorshSerialize)]
 #[serde(rename_all = "camelCase")]
+#[borsh(crate = "borsh")]
 pub struct MessageAddressTableLookup {
     /// Address lookup table account key
     pub account_key: Pubkey,
@@ -54,8 +55,9 @@ pub struct MessageAddressTableLookup {
 ///
 /// [`message`]: crate::message
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
-#[derive(Serialize, Deserialize, Default, Debug, PartialEq, Eq, Clone)]
+#[derive(Serialize, Deserialize, Default, Debug, PartialEq, Eq, Clone, borsh::BorshDeserialize, borsh::BorshSerialize)]
 #[serde(rename_all = "camelCase")]
+#[borsh(crate = "borsh")]
 pub struct Message {
     /// The message header, identifying signed and read-only `account_keys`.
     /// Header values only describe static `account_keys`, they do not describe

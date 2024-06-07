@@ -7103,6 +7103,8 @@ dependencies = [
  "assert_matches",
  "bincode",
  "bitflags 2.4.2",
+ "borsh 0.10.3",
+ "borsh 0.9.3",
  "borsh 1.5.0",
  "bs58",
  "bytemuck",
@@ -7316,6 +7318,9 @@ name = "solana-svm"
 version = "2.0.0"
 dependencies = [
  "bincode",
+ "borsh 0.10.3",
+ "borsh 0.9.3",
+ "borsh 1.5.0",
  "itertools",
  "libsecp256k1",
  "log",

@@ -11,6 +11,9 @@ edition = { workspace = true }
 
 [dependencies]
 itertools = { workspace = true }
+borsh = { workspace = true }
+borsh0-9 = { package = "borsh", version = "0.9.3" }
+borsh0-10 = { package = "borsh", version = "0.10.3" }
 log = { workspace = true }
 percentage = { workspace = true }
 serde = { workspace = true, features = ["rc"] }

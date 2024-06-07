@@ -22,6 +22,7 @@ use {
     solana_program::message::SanitizedVersionedMessage,
     std::collections::HashSet,
 };
+use solana_program::impl_borsh_serialize_deserialize;
 
 /// Maximum number of accounts that a transaction may lock.
 /// 128 was chosen because it is the minimum number of accounts
@@ -29,13 +30,17 @@ use {
 pub const MAX_TX_ACCOUNT_LOCKS: usize = 128;
 
 /// Sanitized transaction and the hash of its message
-#[derive(Debug, Clone, Eq, PartialEq)]
+#[derive(Debug, Clone, Eq, PartialEq, borsh::BorshDeserialize, borsh::BorshSerialize, serde::Serialize, serde::Deserialize)]
+#[borsh(crate = "borsh")]
 pub struct SanitizedTransaction {
     message: SanitizedMessage,
     message_hash: Hash,
     is_simple_vote_tx: bool,
     signatures: Vec<Signature>,
 }
+
+impl_borsh_serialize_deserialize!(borsh0_9, SanitizedTransaction);
+impl_borsh_serialize_deserialize!(borsh0_10, SanitizedTransaction);
 
 /// Set of accounts that must be locked for safe transaction processing
 #[derive(Debug, Clone, Default, Eq, PartialEq)]

@@ -21,7 +21,8 @@ use {
     thiserror::Error,
 };
 
-#[derive(Debug, Clone, Eq, PartialEq)]
+#[derive(Debug, Clone, Eq, PartialEq, borsh::BorshDeserialize, borsh::BorshSerialize, serde::Serialize, serde::Deserialize)]
+#[borsh(crate = "borsh")]
 pub struct LegacyMessage<'a> {
     /// Legacy message
     pub message: Cow<'a, legacy::Message>,
@@ -72,7 +73,8 @@ impl<'a> LegacyMessage<'a> {
 }
 
 /// Sanitized message of a transaction.
-#[derive(Debug, Clone, Eq, PartialEq)]
+#[derive(Debug, Clone, Eq, PartialEq, borsh::BorshDeserialize, borsh::BorshSerialize, serde::Serialize, serde::Deserialize)]
+#[borsh(crate = "borsh")]
 pub enum SanitizedMessage {
     /// Sanitized legacy message
     Legacy(LegacyMessage<'static>),

@@ -919,13 +919,13 @@ mod tests {
             &mock_bank,
             &sanitized_transaction,
             &mut loaded_transaction,
-            ComputeBudget::default(),
-            None,
+            ComputeBudget::default(), // ok
+            None, // ok
             record_config,
-            &mut ExecuteTimings::default(),
-            &mut TransactionErrorMetrics::default(),
-            None,
-            &loaded_programs,
+            &mut ExecuteTimings::default(), //  ok
+            &mut TransactionErrorMetrics::default(), // ok
+            None, // ok
+            &loaded_programs, // ok
         );
 
         let TransactionExecutionResult::Executed {

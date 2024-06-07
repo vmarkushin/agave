@@ -8,7 +8,8 @@ use {
 };
 
 /// Combination of a version #0 message and its loaded addresses
-#[derive(Debug, Clone, Eq, PartialEq)]
+#[derive(Debug, Clone, Eq, PartialEq, borsh::BorshDeserialize, borsh::BorshSerialize, serde::Serialize, serde::Deserialize)]
+#[borsh(crate = "borsh")]
 pub struct LoadedMessage<'a> {
     /// Message which loaded a collection of lookup table addresses
     pub message: Cow<'a, v0::Message>,
@@ -21,7 +22,8 @@ pub struct LoadedMessage<'a> {
 
 /// Collection of addresses loaded from on-chain lookup tables, split
 /// by readonly and writable.
-#[derive(Clone, Default, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Clone, Default, Debug, PartialEq, Eq, Serialize, Deserialize, borsh::BorshDeserialize, borsh::BorshSerialize)]
+#[borsh(crate = "borsh")]
 pub struct LoadedAddresses {
     /// List of addresses for writable loaded accounts
     pub writable: Vec<Pubkey>,

@@ -431,6 +431,7 @@ fn prepare_transactions(
 fn svm_integration() {
     let mut mock_bank = MockBankCallback::default();
     let (transactions, mut check_results) = prepare_transactions(&mut mock_bank);
+    println!("transactions: 1: {:#?}\n2: {:#?}", transactions[0], transactions[1]);
     let program_cache = create_executable_environment(&mut mock_bank);
     let program_cache = Arc::new(RwLock::new(program_cache));
     let batch_processor = TransactionBatchProcessor::<MockForkGraph>::new(

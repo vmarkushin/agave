@@ -3,6 +3,7 @@
 //! [SHA-256]: https://en.wikipedia.org/wiki/SHA-2
 //! [`Hash`]: struct@Hash
 
+use std::io::Write;
 use {
     crate::{sanitize::Sanitize, wasm_bindgen},
     borsh::{BorshDeserialize, BorshSchema, BorshSerialize},
@@ -49,6 +50,18 @@ const MAX_BASE58_LEN: usize = 44;
 #[borsh(crate = "borsh")]
 #[repr(transparent)]
 pub struct Hash(pub(crate) [u8; HASH_BYTES]);
+
+impl borsh0_9::BorshSerialize for Hash {
+    fn serialize<W: Write>(&self, writer: &mut W) -> std::io::Result<()> {
+        borsh::BorshSerialize::serialize(&self, writer)
+    }
+}
+
+impl borsh0_9::BorshDeserialize for Hash {
+    fn deserialize(buf: &mut &[u8]) -> std::io::Result<Self> {
+        Ok(borsh::BorshDeserialize::deserialize(buf)?)
+    }
+}
 
 #[derive(Clone, Default)]
 pub struct Hasher {

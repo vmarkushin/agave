@@ -22,6 +22,7 @@ crate::declare_id!("ComputeBudget111111111111111111111111111111");
     Eq,
     Serialize,
 )]
+#[borsh(crate = "borsh")]
 pub enum ComputeBudgetInstruction {
     Unused, // deprecated variant, reserved value.
     /// Request a specific transaction-wide program heap region size in bytes.

@@ -13,6 +13,7 @@ pub mod transaction_error_metrics;
 pub mod transaction_processing_callback;
 pub mod transaction_processor;
 pub mod transaction_results;
+mod macros;
 
 #[macro_use]
 extern crate solana_metrics;

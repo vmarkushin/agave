@@ -29,7 +29,8 @@ use {
 /// dangerous to include error strings from 3rd party crates because they could
 /// change at any time and changes to them are difficult to detect.
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample, AbiEnumVisitor))]
-#[derive(Serialize, Deserialize, Debug, Error, PartialEq, Eq, Clone)]
+#[derive(Serialize, Deserialize, Debug, Error, PartialEq, Eq, Clone, borsh::BorshDeserialize, borsh::BorshSerialize)]
+#[borsh(crate = "borsh")]
 pub enum InstructionError {
     /// Deprecated! Use CustomError instead!
     /// The program instruction returned an error
@@ -629,8 +630,9 @@ impl AccountMeta {
 ///
 /// [`Message`]: crate::message::Message
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
-#[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone, borsh::BorshDeserialize, borsh::BorshSerialize)]
 #[serde(rename_all = "camelCase")]
+#[borsh(crate = "borsh")]
 pub struct CompiledInstruction {
     /// Index into the transaction keys array indicating the program account that executes this instruction.
     pub program_id_index: u8,
